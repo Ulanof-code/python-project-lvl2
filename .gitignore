@@ -8,5 +8,3 @@ coverage.xml
 .pytest_cache/
 .vim
 .idea
-first_test.json
-second_test.json

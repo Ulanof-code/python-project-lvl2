@@ -33,5 +33,3 @@ def generate_diff(file1, file2):
         if key in data2 and key not in data1:
             result += '  {} {}: {} \n'.format('+', key, data2[key])
     return result + '}'
-
-print(generate_diff(args.first_file, args.second_file))

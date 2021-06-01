@@ -1,9 +1,0 @@
-- name: wemake-python-styleguide
-  # You may pin to the exact commit or the version.
-  # uses: wemake-services/wemake-python-styleguide@b8260e79fcbc2feeae2dd4aae2b59ed86aafbf9d
-  uses: wemake-services/wemake-python-styleguide@0.15.2
-  with:
-    # Path or space-separated list of paths to lint
-    path: # optional, default is .
-    # How would you like the results to be displayed?
-    reporter: # optional, default is terminal

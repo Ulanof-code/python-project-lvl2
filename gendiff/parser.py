@@ -20,5 +20,5 @@ def is_yaml(path_to_file):
 
 
 def yaml_parse(file):
-    data = yaml.load(open(file))
+    data = yaml.safe_load(open(file))
     return data

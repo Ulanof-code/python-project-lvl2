@@ -7,4 +7,8 @@
 
 
 ## Demo
+#### Use gendiff with .json
 [![asciicast](https://asciinema.org/a/5EfoOtegxAWJANw0tZDJbIBFP.svg)](https://asciinema.org/a/5EfoOtegxAWJANw0tZDJbIBFP)
+
+#### Use gendiff with .yaml/yml
+[![asciicast](https://asciinema.org/a/zPWO8fZSGa6jgboon4lt5giZR.svg)](https://asciinema.org/a/zPWO8fZSGa6jgboon4lt5giZR)

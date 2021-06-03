@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-from gendiff import gendiff
+from gendiff.gendiff import generate_diff
 import argparse
 
 
@@ -17,4 +17,4 @@ def get_args():
 
 
 if __name__ == "__main__":
-    print(gendiff.generate_diff(get_args().first_file, get_args().second_file))
+    print(generate_diff(get_args().first_file, get_args().second_file))

@@ -1,13 +1,8 @@
 from gendiff.gendiff import generate_diff
 
-correct = """{
-  - follow: False 
-    host: hexlet.io 
-  - proxy: 123.234.53.22 
-  - timeout: 50 
-  + timeout: 20 
-  + verbose: True 
-}"""
+correct = ''
+with open('tests/fixtures/correct_output.txt', 'r') as file:
+    correct = file.read()
 
 
 def test_correct():

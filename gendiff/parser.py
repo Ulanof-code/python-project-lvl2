@@ -22,3 +22,13 @@ def is_yaml(path_to_file):
 def yaml_parse(file):
     data = yaml.safe_load(open(file))
     return data
+
+
+def parse(file):
+    if is_json(file):
+        data = json_parse(file)
+    elif is_yaml(file):
+        data = yaml_parse(file)
+    else:
+        return "{}"
+    return data

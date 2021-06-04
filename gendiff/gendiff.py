@@ -1,15 +1,5 @@
-from gendiff.parser import (is_json, is_yaml, json_parse, yaml_parse)
 
-
-def generate_diff(file1, file2): #noqa C901
-    if is_json(file1) and is_json(file2):
-        data1 = json_parse(file1)
-        data2 = json_parse(file2)
-    elif is_yaml(file1) and is_yaml(file2):
-        data1 = yaml_parse(file1)
-        data2 = yaml_parse(file2)
-    else:
-        return "{}"
+def generate_diff(data1, data2):
     result = '{\n'
     sorted_keys = sorted(set(sorted(data1) + sorted(data2)))
 

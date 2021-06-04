@@ -35,7 +35,7 @@ jobs:
           make lint
     - name: Test with pytest
       run: |
-        pytest
+        poetry run pytest
         
   coverage:
     needs: [ build ]

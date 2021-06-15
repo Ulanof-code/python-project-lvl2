@@ -1,11 +1,12 @@
 from gendiff.gendiff import generate_diff
 from gendiff.parser import parse
 
-with open('tests/fixtures/correct_output.txt', 'r') as file:
-    correct = file.read()
 
-with open('tests/fixtures.correct_complex_output.txt', 'r') as file:
-    complex_correct = file.read()
+with open('tests/fixtures/correct_output.txt', 'r') as file:
+    expected = file.read()
+
+with open('tests/fixtures/correct_complex_output.txt', 'r') as file:
+    complex_expected = file.read()
 
 
 def test_correct_output_json():
@@ -13,7 +14,7 @@ def test_correct_output_json():
         parse('tests/fixtures/file1.json'),
         parse('tests/fixtures/file2.json')
     )
-    assert tmp == correct
+    assert tmp == expected
 
 
 def test_correct_output_yaml():
@@ -21,7 +22,7 @@ def test_correct_output_yaml():
         parse('tests/fixtures/file1.yaml'),
         parse('tests/fixtures/file2.yml')
     )
-    assert tmp == correct
+    assert tmp == expected
 
 
 def test_complex_json():
@@ -29,7 +30,7 @@ def test_complex_json():
         parse('tests/fixtures/complex_file1.json'),
         parse('tests/fixtures/complex_file2.json')
     )
-    assert tmp == complex_correct
+    assert tmp == complex_expected
 
 
 def test_complex_yaml():
@@ -37,4 +38,4 @@ def test_complex_yaml():
         parse('tests/fixtures/complex_file1.yaml'),
         parse('tests/fixtures/complex_file2.yml')
     )
-    assert tmp == complex_correct
+    assert tmp == complex_expected

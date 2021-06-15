@@ -12,3 +12,6 @@
 
 #### Use gendiff with .yaml/yml
 [![asciicast](https://asciinema.org/a/zPWO8fZSGa6jgboon4lt5giZR.svg)](https://asciinema.org/a/zPWO8fZSGa6jgboon4lt5giZR)
+
+#### Use gendiff with complex file
+[![asciicast](https://asciinema.org/a/s9nHXUkumaLuGu7mw3ENU33gR.svg)](https://asciinema.org/a/s9nHXUkumaLuGu7mw3ENU33gR)

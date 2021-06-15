@@ -1,4 +1,4 @@
-from gendiff.gendiff import generate_diff
+from gendiff.gendiff import generate_stylish
 from gendiff.parser import parse
 
 
@@ -10,7 +10,7 @@ with open('tests/fixtures/correct_complex_output.txt', 'r') as file:
 
 
 def test_correct_output_json():
-    tmp = generate_diff(
+    tmp = generate_stylish(
         parse('tests/fixtures/file1.json'),
         parse('tests/fixtures/file2.json')
     )
@@ -18,7 +18,7 @@ def test_correct_output_json():
 
 
 def test_correct_output_yaml():
-    tmp = generate_diff(
+    tmp = generate_stylish(
         parse('tests/fixtures/file1.yaml'),
         parse('tests/fixtures/file2.yml')
     )
@@ -26,7 +26,7 @@ def test_correct_output_yaml():
 
 
 def test_complex_json():
-    tmp = generate_diff(
+    tmp = generate_stylish(
         parse('tests/fixtures/complex_file1.json'),
         parse('tests/fixtures/complex_file2.json')
     )
@@ -34,7 +34,7 @@ def test_complex_json():
 
 
 def test_complex_yaml():
-    tmp = generate_diff(
+    tmp = generate_stylish(
         parse('tests/fixtures/complex_file1.yaml'),
         parse('tests/fixtures/complex_file2.yml')
     )

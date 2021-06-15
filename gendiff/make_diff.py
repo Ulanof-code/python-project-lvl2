@@ -8,13 +8,13 @@ CONDITIONS = {
 }
 
 
-def get_diff(data1, data2):
+def get_diff(data1, data2): # noqa: C901
     def add_item(condition, value):
         """Creating an object to add to the list of differences"""
-        comprehension.append({'condition': condition, 'name': key, 'value': value})
+        differents.append({'condition': condition, 'name': key, 'value': value})
 
     all_keys = sorted(data1.keys() | data2.keys())
-    comprehension = []
+    differents = []
     for key in all_keys:
         value1 = data1.get(key)
         value2 = data2.get(key)
@@ -30,7 +30,7 @@ def get_diff(data1, data2):
         else:
             add_item(CONDITIONS['CHANGED_OLD'], value1)
             add_item(CONDITIONS['CHANGED_NEW'], value2)
-    return comprehension
+    return differents
 
 
 def get_condition(node):

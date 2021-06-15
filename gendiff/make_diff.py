@@ -11,10 +11,10 @@ CONDITIONS = {
 def get_diff(data1, data2): # noqa: C901
     def add_item(condition, value):
         """Creating an object to add to the list of differences"""
-        differents.append({'condition': condition, 'name': key, 'value': value})
+        differences.append({'condition': condition, 'name': key, 'value': value})
 
     all_keys = sorted(data1.keys() | data2.keys())
-    differents = []
+    differences = []
     for key in all_keys:
         value1 = data1.get(key)
         value2 = data2.get(key)
@@ -30,7 +30,7 @@ def get_diff(data1, data2): # noqa: C901
         else:
             add_item(CONDITIONS['CHANGED_OLD'], value1)
             add_item(CONDITIONS['CHANGED_NEW'], value2)
-    return differents
+    return differences
 
 
 def get_condition(node):

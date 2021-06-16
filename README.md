@@ -15,3 +15,6 @@
 
 #### Use gendiff with complex file
 [![asciicast](https://asciinema.org/a/s9nHXUkumaLuGu7mw3ENU33gR.svg)](https://asciinema.org/a/s9nHXUkumaLuGu7mw3ENU33gR)
+
+#### Use gendiff with plain format output
+[![asciicast](https://asciinema.org/a/GW0CGIJvRks2SoaZu2cQ2z7vT.svg)](https://asciinema.org/a/GW0CGIJvRks2SoaZu2cQ2z7vT)

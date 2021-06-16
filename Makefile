@@ -6,3 +6,12 @@ test-coverage:
 
 install:
 	poetry install
+
+test:
+	poetry run pytest -vv
+
+run:
+	poetry run python3 -m gendiff.cli tests/fixtures/file1.json tests/fixtures/file2.json
+
+run-plain:
+	poetry run python3 -m gendiff.cli --format plain tests/fixtures/file1.json tests/fixtures/file2.json

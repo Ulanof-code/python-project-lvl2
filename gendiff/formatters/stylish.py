@@ -26,13 +26,13 @@ def make_stylish(diff, level=0):
             result += f'{indent}  {flag}  {name}: '
             result += make_stylish(value, level + 1)
         else:
-            value = convert_value_to_string(value, indent + INDENT)
+            value = formatting_value_to_string(value, indent + INDENT)
             result += f'{indent}  {flag} {name}: {value}'
     result += f'\n{indent}}}'
     return result
 
 
-def convert_value_to_string(value, indent):
+def formatting_value_to_string(value, indent):
     """
     Convert value to string.
     Convert Python "False" and "True" to lowercase.
@@ -49,7 +49,7 @@ def convert_value_to_string(value, indent):
         string = "{\n"
         for key, value in value.items():
             string += f"{INDENT}{indent}{key}: "
-            string += convert_value_to_string(value, indent=indent + INDENT)
+            string += formatting_value_to_string(value, indent=indent + INDENT)
             string += "\n"
         string += f"{indent}}}"
         return string

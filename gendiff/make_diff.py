@@ -8,29 +8,49 @@ CONDITIONS = {
 }
 
 
-def get_diff(data1, data2):  # noqa: C901
+def make_diffs_representation(data1, data2):  # noqa: C901
+    """
+    This function generates the internal representation
+    of the difference program in the source files
+    Parameters:
+        1. data1: dict
+        2. data2 : dict
+    Returns: [{...}, {...}, {...}]
+        - The function will return the list of nested dictionaries.
+        - Each dictionary is one difference in the source files.
+        - Each dictionary has keys 'name', 'condition', 'value'.
+    """
     def add_item(condition, value):
-        """Creating an object to add to the list of differences"""
-        diffs.append({'condition': condition, 'name': key, 'value': value})
+        """
+        Add a key dictionary to "representation":
+            1. 'condition': str;
+            2. 'name': str
+            3. 'value': any
+        """
+        representation.append({
+            'condition': condition,
+            'name': key,
+            'value': value
+        })
 
     all_keys = sorted(data1.keys() | data2.keys())
-    diffs = []
+    representation = []
     for key in all_keys:
         value1 = data1.get(key)
         value2 = data2.get(key)
-        if key not in data2:  # если ключ только в первых данных
+        if key not in data2:
             add_item(CONDITIONS['REMOVED'], value1)
         elif key not in data1:
             add_item(CONDITIONS['ADDED'], value2)
         elif value1 == value2:
             add_item(CONDITIONS['RELATED'], value1)
         elif isinstance(value1, dict) and isinstance(value2, dict):
-            sub_comprehension = get_diff(value1, value2)
+            sub_comprehension = make_diffs_representation(value1, value2)
             add_item(CONDITIONS['IS_DICT'], sub_comprehension)
         else:
             add_item(CONDITIONS['CHANGED_OLD'], value1)
             add_item(CONDITIONS['CHANGED_NEW'], value2)
-    return diffs
+    return representation
 
 
 def get_condition(node):

@@ -7,10 +7,25 @@ with open('tests/fixtures/correct_stylish_output.txt', 'r') as file:
 with open('tests/fixtures/correct_plain_output.txt', 'r') as file:
     plain_expected = file.read()
 
+with open('tests/fixtures/correct_json_output.txt', 'r') as file:
+    json_expected = file.read()
+
+FORMATTERS = [
+    'stylish',
+    'plain',
+    'json'
+]
+
 
 def test_empty():
-    tmp = generate_output({}, {})
-    assert tmp == '{\n}'
+    for formatter in FORMATTERS:
+        print(f'Tested empty generate_output with formatter {formatter}')
+        tmp = generate_output(
+            {},
+            {},
+            formatter
+        )
+        assert tmp == '{\n}'
 
 
 def test_stylish_json():
@@ -47,3 +62,21 @@ def test_plain_yaml():
         'plain'
     )
     assert tmp == plain_expected
+
+
+def test_yaml_to_json():
+    tmp = generate_output(
+        parse('tests/fixtures/file1.yaml'),
+        parse('tests/fixtures/file2.yml'),
+        'json'
+    )
+    assert tmp == json_expected
+
+
+def test_formatter_json():
+    tmp = generate_output(
+        parse('tests/fixtures/file1.json'),
+        parse('tests/fixtures/file2.json'),
+        'json'
+    )
+    assert tmp == json_expected

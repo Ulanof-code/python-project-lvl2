@@ -7,14 +7,11 @@
 
 
 ## Demo
-#### Use gendiff with .json
-[![asciicast](https://asciinema.org/a/5EfoOtegxAWJANw0tZDJbIBFP.svg)](https://asciinema.org/a/5EfoOtegxAWJANw0tZDJbIBFP)
-
-#### Use gendiff with .yaml/yml
-[![asciicast](https://asciinema.org/a/zPWO8fZSGa6jgboon4lt5giZR.svg)](https://asciinema.org/a/zPWO8fZSGa6jgboon4lt5giZR)
-
-#### Use gendiff with complex file
-[![asciicast](https://asciinema.org/a/s9nHXUkumaLuGu7mw3ENU33gR.svg)](https://asciinema.org/a/s9nHXUkumaLuGu7mw3ENU33gR)
+#### Use gendiff with .json files
+[![asciicast](https://asciinema.org/a/Pj15Khwvzv4lcYFfxCJNoJEqZ.svg)](https://asciinema.org/a/Pj15Khwvzv4lcYFfxCJNoJEqZ)
 
 #### Use gendiff with plain format output
 [![asciicast](https://asciinema.org/a/GW0CGIJvRks2SoaZu2cQ2z7vT.svg)](https://asciinema.org/a/GW0CGIJvRks2SoaZu2cQ2z7vT)
+
+#### Use gendiff with json format output
+[![asciicast](https://asciinema.org/a/3Luytcj4Mmf3f34qb8OVSMGqx.svg)](https://asciinema.org/a/3Luytcj4Mmf3f34qb8OVSMGqx)

@@ -1,8 +1,8 @@
 from gendiff.make_diff import (get_value, get_condition, get_name, CONDITIONS)
-import numbers
+from typing import List, Any
 
 
-def make_plain(diffs):
+def make_plain(diffs: List[dict]) -> str:
     plain_output = generate_plain_string(diffs)
     if plain_output:
         return plain_output[:-1]
@@ -10,7 +10,8 @@ def make_plain(diffs):
         return '{\n}'
 
 
-def generate_plain_string(diffs, parent_name=''):  # noqa: C901
+def generate_plain_string(diffs: List[dict],
+                          parent_name='') -> str:  # noqa: C901
     """
     Formatting the difference representation to plain output
     parameters:
@@ -19,13 +20,13 @@ def generate_plain_string(diffs, parent_name=''):  # noqa: C901
     return:
         str
     """
-    result_string = ""
+    result_string: str = ""
     for diff in diffs:
-        name = get_name(diff)
-        condition = get_condition(diff)
-        value = get_value(diff)
+        name: str = get_name(diff)
+        condition: str = get_condition(diff)
+        value: Any = get_value(diff)
         if parent_name:
-            key_full_path = f"{parent_name}.{name}"
+            key_full_path: str = f"{parent_name}.{name}"
         else:
             key_full_path = name
         base_string = f"Property '{key_full_path}' was"
@@ -45,7 +46,7 @@ def generate_plain_string(diffs, parent_name=''):  # noqa: C901
     return result_string
 
 
-def formatting_value_to_string(value):
+def formatting_value_to_string(value: Any) -> str:
     """
     Convert value to string.
     Convert Python "False" and "True" to lowercase.
@@ -61,6 +62,6 @@ def formatting_value_to_string(value):
         return "null"
     if isinstance(value, str):
         return f"'{value}'"
-    if isinstance(value, numbers.Number):
+    if isinstance(value, (int, float, complex)):
         return str(value)
     return "[complex value]"

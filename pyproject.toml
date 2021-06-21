@@ -9,7 +9,6 @@ packages = [
 
 [tool.poetry.dependencies]
 python = "^3.8"
-PyYAML = "^5.4.1"
 
 [tool.poetry.dev-dependencies]
 flake8 = "^3.9.2"
@@ -17,6 +16,10 @@ coverage = "^5.5"
 pytest-cov = "^2.12.1"
 PyYAML = "^5.4.1"
 pytest = "^6.2.4"
+mypy = "^0.902"
+
+[tool.poetry.scripts]
+gendiff = "gendiff.scripts.cli:main"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]

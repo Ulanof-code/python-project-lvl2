@@ -17,7 +17,7 @@ def get_args():
     return args
 
 
-if __name__ == "__main__":
+def main():
     print(
         generate_output(
             parse(get_args().first_file),
@@ -25,3 +25,7 @@ if __name__ == "__main__":
             format_output=get_args().format
         )
     )
+
+
+if __name__ == "__main__":
+    main()

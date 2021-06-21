@@ -10,8 +10,6 @@ install:
 test:
 	poetry run pytest -vv
 
-run:
-	poetry run python3 -m gendiff.cli tests/fixtures/file1.json tests/fixtures/file2.json
+build:
+	poetry build
 
-run-plain:
-	poetry run python3 -m gendiff.cli --format plain tests/fixtures/file1.json tests/fixtures/file2.json

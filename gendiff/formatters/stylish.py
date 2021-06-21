@@ -1,7 +1,8 @@
 from gendiff.make_diff import (get_value, get_condition, get_name, CONDITIONS)
+from typing import Dict, List, Any
 
 
-FLAGS = {
+FLAGS: Dict = {
     'is_dict': '',
     'changed_new': '+',
     'changed_old': '-',
@@ -13,15 +14,17 @@ FLAGS = {
 INDENT = '    '
 
 
-def make_stylish(diff, level=0):
-    result = '{'
-    indent = INDENT * level
+def make_stylish(
+        diff: List[dict],
+        level=0):
+    result: str = '{'
+    indent: str = INDENT * level
     for node in diff:
         result += '\n'
-        name = get_name(node)
-        condition = get_condition(node)
-        value = get_value(node)
-        flag = FLAGS[condition]
+        name: str = get_name(node)
+        condition: str = get_condition(node)
+        value: Any = get_value(node)
+        flag: str = FLAGS[condition]
         if condition == CONDITIONS['IS_DICT']:
             result += f'{indent}  {flag}  {name}: '
             result += make_stylish(value, level + 1)
@@ -32,7 +35,8 @@ def make_stylish(diff, level=0):
     return result
 
 
-def formatting_value_to_string(value, indent):
+def formatting_value_to_string(value: Any,
+                               indent: str) -> str:
     """
     Convert value to string.
     Convert Python "False" and "True" to lowercase.

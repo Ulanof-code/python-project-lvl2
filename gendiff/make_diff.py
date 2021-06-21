@@ -1,3 +1,5 @@
+from typing import Dict, List, Any, Set
+
 CONDITIONS = {
     'REMOVED': 'removed',
     'CHANGED_OLD': 'changed_old',
@@ -8,7 +10,8 @@ CONDITIONS = {
 }
 
 
-def make_diffs_representation(data1, data2):  # noqa: C901
+def make_diffs_representation(data1: Dict,
+                              data2: Dict) -> List[dict]:  # noqa: C901
     """
     This function generates the internal representation
     of the difference program in the source files
@@ -20,7 +23,7 @@ def make_diffs_representation(data1, data2):  # noqa: C901
         - Each dictionary is one difference in the source files.
         - Each dictionary has keys 'name', 'condition', 'value'.
     """
-    def add_item(condition, value):
+    def add_item(condition: str, value: Any):
         """
         Add a key dictionary to "representation":
             1. 'condition': str;
@@ -33,8 +36,8 @@ def make_diffs_representation(data1, data2):  # noqa: C901
             'value': value
         })
 
-    all_keys = sorted(data1.keys() | data2.keys())
-    representation = []
+    all_keys: List[str] = sorted(data1.keys() | data2.keys())
+    representation: List = list()
     for key in all_keys:
         value1 = data1.get(key)
         value2 = data2.get(key)
@@ -53,13 +56,13 @@ def make_diffs_representation(data1, data2):  # noqa: C901
     return representation
 
 
-def get_condition(node):
+def get_condition(node: Dict) -> str:
     return node['condition']
 
 
-def get_value(node):
+def get_value(node: Dict) -> Any:
     return node['value']
 
 
-def get_name(node):
+def get_name(node: Dict) -> str:
     return node['name']

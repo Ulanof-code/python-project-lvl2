@@ -9,7 +9,7 @@ def is_json(path_to_file):
 
 
 def json_parse(file):
-    data = json.loads(open(file).read())
+    data = json.loads(open(file, 'r').read())
     return data
 
 
@@ -20,7 +20,7 @@ def is_yaml(path_to_file):
 
 
 def yaml_parse(file):
-    data = yaml.safe_load(open(file).read())
+    data = yaml.safe_load(open(file, 'r').read())
     return data
 
 

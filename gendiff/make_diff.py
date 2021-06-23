@@ -1,4 +1,4 @@
-from typing import Dict, List, Any, Set
+from typing import Dict, List, Any
 
 CONDITIONS = {
     'REMOVED': 'removed',

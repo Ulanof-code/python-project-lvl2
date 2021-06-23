@@ -1,5 +1,5 @@
 from gendiff.gendiff import generate_diff
-from gendiff.parser import parse
+from gendiff.parser import get_dict_from_file
 
 with open('tests/fixtures/correct_stylish_output.txt', 'r') as file:
     stylish_expected = file.read()
@@ -17,66 +17,43 @@ FORMATTERS = [
 ]
 
 
-def test_empty():
-    for formatter in FORMATTERS:
-        print(f'Tested empty generate_output with formatter {formatter}')
-        tmp = generate_diff(
-            {},
-            {},
-            formatter
-        )
-        assert tmp == '{\n}'
-
-
 def test_stylish_json():
-    tmp = generate_diff(
-        parse('tests/fixtures/file1.json'),
-        parse('tests/fixtures/file2.json'),
-        'stylish'
-    )
+    tmp = generate_diff('tests/fixtures/file1.json',
+                        'tests/fixtures/file2.json',
+                        'stylish')
     assert tmp == stylish_expected
 
 
 def test_stylish_yaml():
-    tmp = generate_diff(
-        parse('tests/fixtures/file1.yaml'),
-        parse('tests/fixtures/file2.yml'),
-        'stylish'
-    )
+    tmp = generate_diff('tests/fixtures/file1.yaml',
+                        'tests/fixtures/file2.yml',
+                        'stylish')
     assert tmp == stylish_expected
 
 
 def test_plain_json():
-    tmp = generate_diff(
-        parse('tests/fixtures/file1.yaml'),
-        parse('tests/fixtures/file2.yml'),
-        'plain'
-    )
+    tmp = generate_diff('tests/fixtures/file1.yaml',
+                        'tests/fixtures/file2.yml',
+                        'plain')
     assert tmp == plain_expected
 
 
 def test_plain_yaml():
-    tmp = generate_diff(
-        parse('tests/fixtures/file1.yaml'),
-        parse('tests/fixtures/file2.yml'),
-        'plain'
-    )
+    tmp = generate_diff('tests/fixtures/file1.yaml',
+                        'tests/fixtures/file2.yml',
+                        'plain')
     assert tmp == plain_expected
 
 
 def test_yaml_to_json():
-    tmp = generate_diff(
-        parse('tests/fixtures/file1.yaml'),
-        parse('tests/fixtures/file2.yml'),
-        'json'
-    )
+    tmp = generate_diff('tests/fixtures/file1.yaml',
+                        'tests/fixtures/file2.yml',
+                        'json')
     assert tmp == json_expected
 
 
 def test_formatter_json():
-    tmp = generate_diff(
-        parse('tests/fixtures/file1.json'),
-        parse('tests/fixtures/file2.json'),
-        'json'
-    )
+    tmp = generate_diff('tests/fixtures/file1.json',
+                        'tests/fixtures/file2.json',
+                        'json')
     assert tmp == json_expected

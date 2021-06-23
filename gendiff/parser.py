@@ -27,8 +27,11 @@ def yaml_parse(file):
 def parse(file):
     if is_json(file):
         data = json_parse(file)
+        if isinstance(data, dict):
+            return data
     elif is_yaml(file):
         data = yaml_parse(file)
+        if isinstance(data, dict):
+            return data
     else:
         return {}
-    return data

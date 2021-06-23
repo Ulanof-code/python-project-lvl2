@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-from gendiff.gendiff import generate_output
+from gendiff.gendiff import generate_diff
 from gendiff.parser import parse
 import argparse
 
@@ -19,7 +19,7 @@ def get_args():
 
 def main():
     print(
-        generate_output(
+        generate_diff(
             parse(get_args().first_file),
             parse(get_args().second_file),
             format_output=get_args().format

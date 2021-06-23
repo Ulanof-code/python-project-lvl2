@@ -6,8 +6,8 @@ from typing import Dict
 
 
 def generate_diff(data1: Dict,
-                    data2: Dict,
-                    format_output='stylish') -> str:
+                  data2: Dict,
+                  format_output='stylish') -> str:
     diffs = make_diffs_representation(data1, data2)
     if format_output == 'plain':
         return make_plain(diffs)

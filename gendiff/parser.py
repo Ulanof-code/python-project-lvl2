@@ -29,9 +29,9 @@ def parse(file):
         data = json_parse(file)
         if isinstance(data, dict):
             return data
+        raise RuntimeError('Неявная цепочка исключений')
     elif is_yaml(file):
         data = yaml_parse(file)
         if isinstance(data, dict):
             return data
-    else:
-        return {}
+        raise RuntimeError('Неявная цепочка исключений')

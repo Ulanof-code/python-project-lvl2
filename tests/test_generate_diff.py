@@ -1,4 +1,4 @@
-from gendiff.gendiff import generate_output
+from gendiff.gendiff import generate_diff
 from gendiff.parser import parse
 
 with open('tests/fixtures/correct_stylish_output.txt', 'r') as file:
@@ -20,7 +20,7 @@ FORMATTERS = [
 def test_empty():
     for formatter in FORMATTERS:
         print(f'Tested empty generate_output with formatter {formatter}')
-        tmp = generate_output(
+        tmp = generate_diff(
             {},
             {},
             formatter
@@ -29,7 +29,7 @@ def test_empty():
 
 
 def test_stylish_json():
-    tmp = generate_output(
+    tmp = generate_diff(
         parse('tests/fixtures/file1.json'),
         parse('tests/fixtures/file2.json'),
         'stylish'
@@ -38,7 +38,7 @@ def test_stylish_json():
 
 
 def test_stylish_yaml():
-    tmp = generate_output(
+    tmp = generate_diff(
         parse('tests/fixtures/file1.yaml'),
         parse('tests/fixtures/file2.yml'),
         'stylish'
@@ -47,7 +47,7 @@ def test_stylish_yaml():
 
 
 def test_plain_json():
-    tmp = generate_output(
+    tmp = generate_diff(
         parse('tests/fixtures/file1.yaml'),
         parse('tests/fixtures/file2.yml'),
         'plain'
@@ -56,7 +56,7 @@ def test_plain_json():
 
 
 def test_plain_yaml():
-    tmp = generate_output(
+    tmp = generate_diff(
         parse('tests/fixtures/file1.yaml'),
         parse('tests/fixtures/file2.yml'),
         'plain'
@@ -65,7 +65,7 @@ def test_plain_yaml():
 
 
 def test_yaml_to_json():
-    tmp = generate_output(
+    tmp = generate_diff(
         parse('tests/fixtures/file1.yaml'),
         parse('tests/fixtures/file2.yml'),
         'json'
@@ -74,7 +74,7 @@ def test_yaml_to_json():
 
 
 def test_formatter_json():
-    tmp = generate_output(
+    tmp = generate_diff(
         parse('tests/fixtures/file1.json'),
         parse('tests/fixtures/file2.json'),
         'json'

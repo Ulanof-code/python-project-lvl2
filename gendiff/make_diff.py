@@ -36,7 +36,7 @@ def make_diffs_representation(data1: Dict,
             'value': value
         })
 
-    all_keys: List[str] = sorted(data1.keys() | data2.keys())
+    all_keys = sorted(data1.keys() | data2.keys())
     representation: List = list()
     for key in all_keys:
         value1 = data1.get(key)

@@ -1,5 +1,4 @@
 from gendiff.gendiff import generate_diff
-from gendiff.parser import get_dict_from_file
 
 with open('tests/fixtures/correct_stylish_output.txt', 'r') as file:
     stylish_expected = file.read()

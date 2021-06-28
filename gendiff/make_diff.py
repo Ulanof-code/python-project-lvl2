@@ -11,7 +11,7 @@ CONDITIONS = {
 
 
 def make_diffs_representation(data1: Dict,
-                              data2: Dict) -> List[dict]:  # noqa: C901
+                              data2: Dict) -> List[dict]:
     """
     This function generates the internal representation
     of the difference program in the source files

@@ -1,56 +1,31 @@
 # This workflow will install Python dependencies, run tests and lint with a variety of Python versions
 # For more information see: https://help.github.com/actions/language-and-framework-guides/using-python-with-github-actions
 
-name: Python package
+name: python-package
 
-on:
-  push:
-    branches: [ main ]
-  pull_request:
-    branches: [ main ]
+on: push
 
 jobs:
-  build:
-
+  lint:
+    name: Run tests
     runs-on: ubuntu-latest
-    strategy:
-      fail-fast: false
-      matrix:
-        python-version: [3.7, 3.8, 3.9]
 
     steps:
-    - uses: actions/checkout@v2
-    - name: Set up Python ${{ matrix.python-version }}
-      uses: actions/setup-python@v2
-      with:
-        python-version: ${{ matrix.python-version }}
-    - name: Install dependencies
-      run: |
-          python -m pip install --upgrade pip
-          python -m pip install poetry
-          make install
-          
-    - name: Lint the package
-      run : |
-          make lint
-    - name: Test with pytest
-      run: |
-        poetry run pytest
-        
-  coverage:
-    needs: [ build ]
-    name: coverage
-    runs-on: ubuntu-latest
-    steps:
-    - uses: actions/checkout@master
-    - uses: actions/setup-python@v2
-      with:
-        python-version: 3.8.5
-    - run: |
-          pip install poetry
-          make install
-    - uses: paambaati/codeclimate-action@v2.7.5
-      env:
-        CC_TEST_REPORTER_ID: 39a1fcfd251c207f67f7b25656ed0e155b06227b4942316e43a26707fc94458c
-      with:
-        coverageCommand: make test-coverage
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: install poetry
+        run: pip install poetry
+
+      - name: set up poetry
+        run: make install
+
+      - name: Run tests
+        run: make test
+
+      - name: create coverage report for CodeClimate
+        uses: paambaati/codeclimate-action@v2.7.5
+        env:
+          CC_TEST_REPORTER_ID: ${{ secrets.CODECLIMATE_ID }}
+        with:
+          coverageCommand: make coverage

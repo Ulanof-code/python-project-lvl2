@@ -27,7 +27,9 @@ jobs:
         run: make lint
 
       - name: mypy
-        run: make mypy
+        run: |
+          poetry shell
+          make mypy
 
       - name: create coverage report for CodeClimate
         uses: paambaati/codeclimate-action@v2.7.5

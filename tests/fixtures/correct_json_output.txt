@@ -2,49 +2,49 @@
     "common": {
         "condition": "is_dict",
         "value": {
-            "common.follow": {
+            "follow": {
                 "condition": "added",
                 "value": false
             },
-            "common.setting1": {
+            "setting1": {
                 "condition": "related",
                 "value": "Value 1"
             },
-            "common.setting2": {
+            "setting2": {
                 "condition": "removed",
                 "value": 200
             },
-            "common.setting3": {
+            "setting3": {
                 "condition": "changed_new",
                 "value": null
             },
-            "common.setting4": {
+            "setting4": {
                 "condition": "added",
                 "value": "blah blah"
             },
-            "common.setting5": {
+            "setting5": {
                 "condition": "added",
                 "value": {
                     "key5": "value5"
                 }
             },
-            "common.setting6": {
+            "setting6": {
                 "condition": "is_dict",
                 "value": {
-                    "common.setting6.doge": {
+                    "doge": {
                         "condition": "is_dict",
                         "value": {
-                            "common.setting6.doge.wow": {
+                            "wow": {
                                 "condition": "changed_new",
                                 "value": "so much"
                             }
                         }
                     },
-                    "common.setting6.key": {
+                    "key": {
                         "condition": "related",
                         "value": "value"
                     },
-                    "common.setting6.ops": {
+                    "ops": {
                         "condition": "added",
                         "value": "vops"
                     }
@@ -55,15 +55,15 @@
     "group1": {
         "condition": "is_dict",
         "value": {
-            "group1.baz": {
+            "baz": {
                 "condition": "changed_new",
                 "value": "bars"
             },
-            "group1.foo": {
+            "foo": {
                 "condition": "related",
                 "value": "bar"
             },
-            "group1.nest": {
+            "nest": {
                 "condition": "changed_new",
                 "value": "str"
             }

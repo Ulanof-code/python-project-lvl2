@@ -20,8 +20,16 @@ jobs:
       - name: set up poetry
         run: make install
 
-      - name: Run tests
+      - name: pytest
         run: make test
+
+      - name: linter
+        run: make lint
+
+      - name: mypy
+        run: |
+          mypy --install-types
+          make mypy
 
       - name: create coverage report for CodeClimate
         uses: paambaati/codeclimate-action@v2.7.5

@@ -1,4 +1,10 @@
 from gendiff.gendiff import generate_diff
+import pytest
+
+file1_json = 'tests/fixtures/file1.json'
+file2_json = 'tests/fixtures/file2.json'
+file1_yaml = 'tests/fixtures/file1.yaml'
+file2_yml = 'tests/fixtures/file2.yml'
 
 with open('tests/fixtures/correct_stylish_output.txt', 'r') as file:
     stylish_expected = file.read()
@@ -16,43 +22,16 @@ FORMATTERS = [
 ]
 
 
-def test_stylish_json():
-    tmp = generate_diff('tests/fixtures/file1.json',
-                        'tests/fixtures/file2.json',
-                        'stylish')
-    assert tmp == stylish_expected
-
-
-def test_stylish_yaml():
-    tmp = generate_diff('tests/fixtures/file1.yaml',
-                        'tests/fixtures/file2.yml',
-                        'stylish')
-    assert tmp == stylish_expected
-
-
-def test_plain_json():
-    tmp = generate_diff('tests/fixtures/file1.yaml',
-                        'tests/fixtures/file2.yml',
-                        'plain')
-    assert tmp == plain_expected
-
-
-def test_plain_yaml():
-    tmp = generate_diff('tests/fixtures/file1.yaml',
-                        'tests/fixtures/file2.yml',
-                        'plain')
-    assert tmp == plain_expected
-
-
-def test_yaml_to_json():
-    tmp = generate_diff('tests/fixtures/file1.yaml',
-                        'tests/fixtures/file2.yml',
-                        'json')
-    assert tmp == json_expected
-
-
-def test_formatter_json():
-    tmp = generate_diff('tests/fixtures/file1.json',
-                        'tests/fixtures/file2.json',
-                        'json')
-    assert tmp == json_expected
+@pytest.mark.parametrize('fixture1, fixture2, formatter, result', [
+    (file1_json, file2_json, FORMATTERS[0], stylish_expected),
+    (file1_json, file2_json, FORMATTERS[1], plain_expected),
+    (file1_json, file2_json, FORMATTERS[2], json_expected),
+    (file1_yaml, file2_yml, FORMATTERS[0], stylish_expected),
+    (file1_yaml, file2_yml, FORMATTERS[1], plain_expected),
+    (file1_yaml, file2_yml, FORMATTERS[2], json_expected)
+])
+def test_all_cases(fixture1, fixture2, formatter, result):
+    tmp = generate_diff(fixture1,
+                        fixture2,
+                        formatter)
+    assert tmp == result

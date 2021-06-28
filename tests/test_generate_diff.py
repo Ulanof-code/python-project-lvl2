@@ -1,4 +1,5 @@
 from gendiff.gendiff import generate_diff
+from gendiff.common_components import read_file
 import pytest
 
 file1_json = 'tests/fixtures/file1.json'
@@ -6,14 +7,10 @@ file2_json = 'tests/fixtures/file2.json'
 file1_yaml = 'tests/fixtures/file1.yaml'
 file2_yml = 'tests/fixtures/file2.yml'
 
-with open('tests/fixtures/correct_stylish_output.txt', 'r') as file:
-    stylish_expected = file.read()
 
-with open('tests/fixtures/correct_plain_output.txt', 'r') as file:
-    plain_expected = file.read()
-
-with open('tests/fixtures/correct_json_output.txt', 'r') as file:
-    json_expected = file.read()
+stylish_expected = read_file('tests/fixtures/correct_stylish_output.txt')
+plain_expected = read_file('tests/fixtures/correct_plain_output.txt')
+json_expected = read_file('tests/fixtures/correct_json_output.txt')
 
 FORMATTERS = [
     'stylish',

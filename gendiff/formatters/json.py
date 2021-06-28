@@ -18,19 +18,15 @@ def make_json(diffs: List[dict]) -> str:
     return json_output
 
 
-def dict_formatting(diffs: List[dict],
-                    parent_name=None) -> Dict:
+def dict_formatting(diffs: List[dict]) -> Dict:
     result = {}
     for diff in diffs:
         name = get_name(diff)
         condition = get_condition(diff)
         value = get_value(diff)
-        if parent_name is None:
-            current_key = str(name)
-        else:
-            current_key = f"{parent_name}.{name}"
+        current_key = f"{name}"
         if condition == CONDITIONS['IS_DICT']:
-            value = dict_formatting(value, parent_name=current_key)
+            value = dict_formatting(value)
             result[current_key] = {
                 'condition': condition,
                 'value': value,

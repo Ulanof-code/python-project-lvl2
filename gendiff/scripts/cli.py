@@ -10,17 +10,18 @@ def get_args():
     parser.add_argument('-f', '--format',
                         type=str,
                         help='What is the output format?',
-                        default='stylish'
+                        default='stylish',
+                        choices=['stylish', 'plain', 'json']
                         )
-    args = parser.parse_args()
-    return args
+    return parser
 
 
 def main():
+    args = get_args().parse_args()
     print(
-        generate_diff(get_args().first_file,
-                      get_args().second_file,
-                      format_output=get_args().format)
+        generate_diff(args.first_file,
+                      args.second_file,
+                      format_output=args.format)
     )
 
 

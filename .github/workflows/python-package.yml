@@ -28,7 +28,7 @@ jobs:
 
       - name: mypy
         run: |
-          mypy --install-types
+          make mypy-install-types
           make mypy
 
       - name: create coverage report for CodeClimate

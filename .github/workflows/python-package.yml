@@ -20,9 +20,6 @@ jobs:
       - name: set up poetry
         run: make install
 
-      - name: activate virtual env
-        run: poetry shell
-
       - name: pytest
         run: make test
 

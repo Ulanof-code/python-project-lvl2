@@ -18,6 +18,7 @@ coverage = "^5.5"
 pytest-cov = "^2.12.1"
 pytest = "^6.2.4"
 mypy = "^0.902"
+types-PyYAML = "^5.4.3"
 
 [tool.poetry.scripts]
 gendiff = "gendiff.scripts.cli:main"

@@ -28,8 +28,8 @@ jobs:
 
       - name: mypy
         run: |
-        make mypy
-        make mypy-install-types
+          make mypy
+          make mypy-install-types
 
       - name: create coverage report for CodeClimate
         uses: paambaati/codeclimate-action@v2.7.5

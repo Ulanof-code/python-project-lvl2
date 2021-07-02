@@ -1,4 +1,4 @@
-from gendiff.make_diff import get_value, get_changed_value, get_name, get_condition
+from gendiff.make_diff import get_value, get_changed_value, get_condition
 from typing import Dict, Any, List
 
 PROPERTY = 'Property'

@@ -1,9 +1,8 @@
-from typing import Dict, List, Any
+from typing import Dict, Any
 
 CONDITIONS = {
     'REMOVED': 'removed',
-    'CHANGED_OLD': 'changed_old',
-    'CHANGED_NEW': 'changed_new',
+    'CHANGED': 'changed',
     'ADDED': 'added',
     'RELATED': 'related',
     'IS_DICT': 'is_dict'
@@ -11,7 +10,7 @@ CONDITIONS = {
 
 
 def make_diffs_representation(data1: Dict,
-                              data2: Dict) -> List[dict]:
+                              data2: Dict) -> Dict:
     """
     This function generates the internal representation
     of the difference program in the source files
@@ -23,22 +22,22 @@ def make_diffs_representation(data1: Dict,
         - Each dictionary is one difference in the source files.
         - Each dictionary has keys 'name', 'condition', 'value'.
     """
-    def add_item(condition: str, value: Any):
+    def add_item(condition: str, value: Any, changed_value: Any=None):
         """
         Add a key dictionary to "representation":
             1. 'condition': str;
             2. 'name': str
             3. 'value': any
         """
-        representation.append({
-            'condition': condition,
-            'name': key,
-            'value': value
-        })
+        node['condition'] = condition
+        node['name'] = key
+        node['value'] = value
+        node['changed_value'] = changed_value
 
-    all_keys = sorted(data1.keys() | data2.keys())
-    representation: List = list()
+    all_keys = data1.keys() | data2.keys()
+    representation: Dict = dict()
     for key in all_keys:
+        node = {}
         value1 = data1.get(key)
         value2 = data2.get(key)
         if key not in data2:
@@ -47,12 +46,17 @@ def make_diffs_representation(data1: Dict,
             add_item(CONDITIONS['ADDED'], value2)
         elif value1 == value2:
             add_item(CONDITIONS['RELATED'], value1)
-        elif isinstance(value1, dict) and isinstance(value2, dict):
+        elif all([
+            value1 != value2,
+            isinstance(value1, dict),
+            isinstance(value2, dict)
+        ]):
+
             sub_comprehension = make_diffs_representation(value1, value2)
             add_item(CONDITIONS['IS_DICT'], sub_comprehension)
         else:
-            add_item(CONDITIONS['CHANGED_OLD'], value1)
-            add_item(CONDITIONS['CHANGED_NEW'], value2)
+            add_item(CONDITIONS['CHANGED'], value1, changed_value=value2)
+        representation[key] = node
     return representation
 
 
@@ -62,6 +66,10 @@ def get_condition(node: Dict) -> str:
 
 def get_value(node: Dict) -> Any:
     return node['value']
+
+
+def get_changed_value(node: Dict) -> Any:
+    return node['changed_value']
 
 
 def get_name(node: Dict) -> str:

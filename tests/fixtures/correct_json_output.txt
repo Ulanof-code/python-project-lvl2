@@ -15,8 +15,9 @@
                 "value": 200
             },
             "setting3": {
-                "condition": "changed_new",
-                "value": null
+                "condition": "changed",
+                "new_value": null,
+                "old_value": true
             },
             "setting4": {
                 "condition": "added",
@@ -35,8 +36,9 @@
                         "condition": "is_dict",
                         "value": {
                             "wow": {
-                                "condition": "changed_new",
-                                "value": "so much"
+                                "condition": "changed",
+                                "new_value": "so much",
+                                "old_value": ""
                             }
                         }
                     },
@@ -56,16 +58,20 @@
         "condition": "is_dict",
         "value": {
             "baz": {
-                "condition": "changed_new",
-                "value": "bars"
+                "condition": "changed",
+                "new_value": "bars",
+                "old_value": "bas"
             },
             "foo": {
                 "condition": "related",
                 "value": "bar"
             },
             "nest": {
-                "condition": "changed_new",
-                "value": "str"
+                "condition": "changed",
+                "new_value": "str",
+                "old_value": {
+                    "key": "value"
+                }
             }
         }
     },

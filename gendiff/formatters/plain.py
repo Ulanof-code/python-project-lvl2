@@ -1,4 +1,4 @@
-from gendiff.make_diff import (get_value, get_condition, get_name, CONDITIONS)
+from gendiff.make_diff import get_value, get_changed_value, get_name, get_condition, CONDITIONS
 from typing import List, Any
 
 
@@ -20,23 +20,25 @@ def generate_plain_string(diffs: List[dict],
     return:
         str
     """
+    sorted_keys = sorted(diffs.keys())
     result_string: str = ""
-    for diff in diffs:
-        name: str = get_name(diff)
-        condition: str = get_condition(diff)
-        value: Any = get_value(diff)
+    for key in sorted_keys:
+        name: str = get_name(diffs[key])
+        condition: str = get_condition(diffs[key])
+        value: Any = get_value(diffs[key])
+        changed_value: Any = get_changed_value(diffs[key])
         if parent_name:
             key_full_path: str = f"{parent_name}.{name}"
         else:
             key_full_path = name
         base_string = f"Property '{key_full_path}' was"
         value_string = formatting_value_to_string(value)
+        changed_value_string = formatting_value_to_string(changed_value)
         if condition == CONDITIONS['IS_DICT']:
             result_string += generate_plain_string(value, parent_name=key_full_path)  # noqa: E501
-        elif condition == CONDITIONS['CHANGED_OLD']:
+        elif condition == CONDITIONS['CHANGED']:
             result_string += f"{base_string} updated. From {value_string} to "
-        elif condition == CONDITIONS['CHANGED_NEW']:
-            result_string += f"{value_string}\n"
+            result_string += f"{changed_value_string}\n"
         elif condition == CONDITIONS['ADDED']:
             result_string += f"{base_string} added with value: {value_string}\n"  # noqa: E501
         elif condition == CONDITIONS['REMOVED']:

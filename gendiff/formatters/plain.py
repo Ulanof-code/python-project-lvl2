@@ -1,11 +1,13 @@
-from gendiff.make_diff import get_value, get_changed_value, get_name, get_condition, CONDITIONS
-from typing import Dict, Any
+from gendiff.make_diff import get_value, get_changed_value, get_name, get_condition
+from typing import Dict, Any, List
+
+PROPERTY = 'Property'
 
 
 def make_plain(diffs: Dict) -> str:
     plain_output = generate_plain_string(diffs)
     if plain_output:
-        return plain_output[:-1]
+        return plain_output
     else:
         return '{\n}'
 
@@ -21,31 +23,44 @@ def generate_plain_string(diffs: Dict,
         str
     """
     sorted_keys = sorted(diffs.keys())
-    result_string: str = ""
+    result_list: List = []
     for key in sorted_keys:
-        name: str = get_name(diffs[key])
         condition: str = get_condition(diffs[key])
         value: Any = get_value(diffs[key])
         changed_value: Any = get_changed_value(diffs[key])
-        if parent_name:
-            key_full_path: str = f"{parent_name}.{name}"
+        if parent_name == '':
+            key_full_path = key
         else:
-            key_full_path = name
-        base_string = f"Property '{key_full_path}' was"
-        value_string = formatting_value_to_string(value)
-        changed_value_string = formatting_value_to_string(changed_value)
-        if condition == CONDITIONS['IS_DICT']:
-            result_string += generate_plain_string(value, parent_name=key_full_path)  # noqa: E501
-        elif condition == CONDITIONS['CHANGED']:
-            result_string += f"{base_string} updated. From {value_string} to "
-            result_string += f"{changed_value_string}\n"
-        elif condition == CONDITIONS['ADDED']:
-            result_string += f"{base_string} added with value: {value_string}\n"  # noqa: E501
-        elif condition == CONDITIONS['REMOVED']:
-            result_string += f"{base_string} removed\n"
-        else:  # same
-            pass
-    return result_string
+            key_full_path = '.'.join([parent_name, key])
+        new_path = "'{}'".format(key_full_path)
+        if condition == 'changed':
+            result_list.append(' '.join([
+                PROPERTY,
+                new_path,
+                'was updated. From',
+                formatting_value_to_string(value),
+                'to',
+                formatting_value_to_string(changed_value),
+            ]))
+        elif condition == 'added':
+            result_list.append(' '.join([
+                PROPERTY,
+                new_path,
+                'was added with value:',
+                formatting_value_to_string(value),
+            ]))
+        elif condition == 'removed':
+            result_list.append(' '.join([
+                PROPERTY,
+                new_path,
+                'was removed',
+            ]))
+        elif condition == 'is_dict':
+            result_list.append(generate_plain_string(
+                diffs[key]['value'],
+                parent_name=key_full_path,
+            ))
+    return '\n'.join(result_list)
 
 
 def formatting_value_to_string(value: Any) -> str:

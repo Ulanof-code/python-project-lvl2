@@ -1,12 +1,10 @@
 from typing import Dict, Any
 
-CONDITIONS = {
-    'REMOVED': 'removed',
-    'CHANGED': 'changed',
-    'ADDED': 'added',
-    'RELATED': 'related',
-    'IS_DICT': 'is_dict'
-}
+REMOVED = 'removed'
+CHANGED = 'changed'
+ADDED = 'added'
+RELATED = 'related'
+IS_DICT = 'is_dict'
 
 
 def make_diffs_representation(data1: Dict,
@@ -22,6 +20,7 @@ def make_diffs_representation(data1: Dict,
         - Each dictionary is one difference in the source files.
         - Each dictionary has keys 'name', 'condition', 'value'.
     """
+
     def add_item(condition: str, value: Any, changed_value=None):
         """
         Add a key dictionary to "representation":
@@ -41,20 +40,20 @@ def make_diffs_representation(data1: Dict,
         value1: Any = data1.get(key)
         value2: Any = data2.get(key)
         if key not in data2:
-            add_item(CONDITIONS['REMOVED'], value1)
+            add_item(REMOVED, value1)
         elif key not in data1:
-            add_item(CONDITIONS['ADDED'], value2)
+            add_item(ADDED, value2)
         elif value1 == value2:
-            add_item(CONDITIONS['RELATED'], value1)
+            add_item(RELATED, value1)
         elif all([
             value1 != value2,
             isinstance(value1, dict),
             isinstance(value2, dict)
         ]):
             sub_comprehension = make_diffs_representation(value1, value2)
-            add_item(CONDITIONS['IS_DICT'], sub_comprehension)
+            add_item(IS_DICT, sub_comprehension)
         else:
-            add_item(CONDITIONS['CHANGED'], value1, changed_value=value2)
+            add_item(CHANGED, value1, changed_value=value2)
         representation[key] = node
     return representation
 

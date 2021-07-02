@@ -1,1 +1,1 @@
-STYLISH, PLAIN, JSON = 'stylish', 'plain', 'json'
+FORMATS = ('stylish', 'plain', 'json')

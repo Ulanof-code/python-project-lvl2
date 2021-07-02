@@ -1,4 +1,4 @@
-from gendiff.make_diff import CONDITIONS, get_condition, get_name, get_changed_value, get_value
+from gendiff.make_diff import get_condition, get_name, get_changed_value, get_value
 import json
 from typing import Dict
 
@@ -26,14 +26,14 @@ def dict_formatting(diffs: Dict) -> Dict:
         value = get_value(diffs[diff])
         changed_value = get_changed_value(diffs[diff])
         current_key = f"{name}"
-        if condition == CONDITIONS['IS_DICT']:
+        if condition == 'is_dict':
             value = dict_formatting(value)
             result[current_key] = {
                 'condition': condition,
                 'value': value,
             }
         else:
-            if condition == CONDITIONS['CHANGED']:
+            if condition == 'changed':
                 result[current_key] = {
                     'condition': condition,
                     'old_value': value,

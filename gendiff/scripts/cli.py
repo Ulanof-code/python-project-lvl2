@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 from gendiff.gendiff import generate_diff
 import argparse
-from gendiff.formatters.formats import STYLISH, PLAIN, JSON
+from gendiff.formatters.formats import FORMATS
 
 
 def get_args():
@@ -11,8 +11,8 @@ def get_args():
     parser.add_argument('-f', '--format',
                         type=str,
                         help='What is the output format?',
-                        default=STYLISH,
-                        choices=[STYLISH, PLAIN, JSON]
+                        default='stylish',
+                        choices=FORMATS
                         )
     return parser
 

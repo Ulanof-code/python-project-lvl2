@@ -1,4 +1,4 @@
-from gendiff.make_diff import (get_value, get_changed_value, get_condition, get_name, CONDITIONS)
+from gendiff.make_diff import get_value, get_changed_value, get_condition, get_name
 from typing import Dict, Any
 
 
@@ -28,7 +28,7 @@ def make_stylish(
         value: Any = get_value(diff[key])
         changed_value = get_changed_value(diff[key])
         flag: str = FLAGS[condition]
-        if condition == CONDITIONS['IS_DICT']:
+        if condition == 'is_dict':
             result += f'{indent}  {flag}  {name}: '
             result += make_stylish(value, level + 1)
         else:

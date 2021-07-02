@@ -3,17 +3,19 @@ from gendiff.formatters.plain import make_plain
 from gendiff.formatters.stylish import make_stylish
 from gendiff.formatters.json import make_json
 from gendiff.parser import get_dict_from_file
-from gendiff.formatters.formats import STYLISH, PLAIN, JSON
+from gendiff.formatters.formats import FORMATS
 
 
 def generate_diff(first_file: str,
                   second_file: str,
-                  format_output=STYLISH) -> str:
+                  format_output='stylish') -> str:
     dict1 = get_dict_from_file(first_file)
     dict2 = get_dict_from_file(second_file)
     diffs = make_diffs_representation(dict1, dict2)
-    if format_output == PLAIN:
+    if format_output not in FORMATS:
+        raise NotImplementedError(f"The format {format_output} is not supported")
+    elif format_output == 'plain':
         return make_plain(diffs)
-    elif format_output == JSON:
+    elif format_output == 'json':
         return make_json(diffs)
     return make_stylish(diffs)

@@ -1,9 +1,9 @@
 from gendiff.make_diff import CONDITIONS, get_condition, get_name, get_changed_value, get_value
 import json
-from typing import List, Dict
+from typing import Dict
 
 
-def make_json(diffs: List[dict]) -> str:
+def make_json(diffs: Dict) -> str:
     """
     Formatting the difference representation to json
     :param:
@@ -18,7 +18,7 @@ def make_json(diffs: List[dict]) -> str:
     return json_output
 
 
-def dict_formatting(diffs: List[dict]) -> Dict:
+def dict_formatting(diffs: Dict) -> Dict:
     result = {}
     for diff in diffs:
         name = get_name(diffs[diff])

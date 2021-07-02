@@ -37,9 +37,9 @@ def make_diffs_representation(data1: Dict,
     all_keys = data1.keys() | data2.keys()
     representation: Dict = dict()
     for key in all_keys:
-        node = {}
-        value1 = data1.get(key)
-        value2 = data2.get(key)
+        node: Dict = {}
+        value1: Any = data1.get(key)
+        value2: Any = data2.get(key)
         if key not in data2:
             add_item(CONDITIONS['REMOVED'], value1)
         elif key not in data1:
@@ -51,7 +51,6 @@ def make_diffs_representation(data1: Dict,
             isinstance(value1, dict),
             isinstance(value2, dict)
         ]):
-
             sub_comprehension = make_diffs_representation(value1, value2)
             add_item(CONDITIONS['IS_DICT'], sub_comprehension)
         else:

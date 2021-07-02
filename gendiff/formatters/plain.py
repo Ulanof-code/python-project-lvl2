@@ -1,8 +1,8 @@
 from gendiff.make_diff import get_value, get_changed_value, get_name, get_condition, CONDITIONS
-from typing import List, Any
+from typing import Dict, Any
 
 
-def make_plain(diffs: List[dict]) -> str:
+def make_plain(diffs: Dict) -> str:
     plain_output = generate_plain_string(diffs)
     if plain_output:
         return plain_output[:-1]
@@ -10,7 +10,7 @@ def make_plain(diffs: List[dict]) -> str:
         return '{\n}'
 
 
-def generate_plain_string(diffs: List[dict],
+def generate_plain_string(diffs: Dict,
                           parent_name='') -> str:  # noqa: C901
     """
     Formatting the difference representation to plain output

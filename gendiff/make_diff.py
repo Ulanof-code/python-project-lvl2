@@ -22,7 +22,7 @@ def make_diffs_representation(data1: Dict,
         - Each dictionary is one difference in the source files.
         - Each dictionary has keys 'name', 'condition', 'value'.
     """
-    def add_item(condition: str, value: Any, changed_value: Any=None):
+    def add_item(condition: str, value: Any, changed_value=None):
         """
         Add a key dictionary to "representation":
             1. 'condition': str;

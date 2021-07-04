@@ -20,19 +20,6 @@ def make_diffs_representation(data1: Dict,
         - Each dictionary is one difference in the source files.
         - Each dictionary has keys 'name', 'condition', 'value'.
     """
-
-    def add_item(condition: str, value: Any, changed_value=None):
-        """
-        Add a key dictionary to "representation":
-            1. 'condition': str;
-            2. 'name': str
-            3. 'value': any
-        """
-        node['condition'] = condition
-        node['name'] = key
-        node['value'] = value
-        node['changed_value'] = changed_value
-
     all_keys = data1.keys() | data2.keys()
     representation: Dict = dict()
     for key in all_keys:
@@ -40,20 +27,31 @@ def make_diffs_representation(data1: Dict,
         value1: Any = data1.get(key)
         value2: Any = data2.get(key)
         if key not in data2:
-            add_item(REMOVED, value1)
+            node['condition'] = REMOVED
+            node['name'] = key
+            node['value'] = value1
+            node['changed_value'] = None
         elif key not in data1:
-            add_item(ADDED, value2)
+            node['condition'] = ADDED
+            node['name'] = key
+            node['value'] = value2
+            node['changed_value'] = None
         elif value1 == value2:
-            add_item(RELATED, value1)
-        elif all([
-            value1 != value2,
-            isinstance(value1, dict),
-            isinstance(value2, dict)
-        ]):
+            node['condition'] = RELATED
+            node['name'] = key
+            node['value'] = value1
+            node['changed_value'] = None
+        elif isinstance(value1, dict) and isinstance(value2, dict):
             sub_comprehension = make_diffs_representation(value1, value2)
-            add_item(IS_DICT, sub_comprehension)
+            node['condition'] = IS_DICT
+            node['name'] = key
+            node['value'] = sub_comprehension
+            node['changed_value'] = None
         else:
-            add_item(CHANGED, value1, changed_value=value2)
+            node['condition'] = CHANGED
+            node['name'] = key
+            node['value'] = value1
+            node['changed_value'] = value2
         representation[key] = node
     return representation
 

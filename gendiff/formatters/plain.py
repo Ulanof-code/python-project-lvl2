@@ -1,5 +1,5 @@
 from gendiff.make_diff import get_value, get_changed_value, get_condition
-from typing import Dict, Any, List
+from typing import Dict, Any
 from gendiff.make_diff import REMOVED, ADDED, CHANGED, IS_DICT
 
 PROPERTY = 'Property'
@@ -10,7 +10,7 @@ def make_plain(diffs: Dict) -> str:
     if plain_output:
         return plain_output
     else:
-        return '{\n}'
+        return '{}'
 
 
 def generate_plain_string(diffs: Dict,
@@ -24,11 +24,11 @@ def generate_plain_string(diffs: Dict,
         str
     """
     sorted_keys = sorted(diffs.keys())
-    result_list: List = []
+    result_list = []
     for key in sorted_keys:
-        condition: str = get_condition(diffs[key])
-        value: Any = get_value(diffs[key])
-        changed_value: Any = get_changed_value(diffs[key])
+        condition = get_condition(diffs[key])
+        value = get_value(diffs[key])
+        changed_value = get_changed_value(diffs[key])
         if parent_name == '':
             key_full_path = key
         else:

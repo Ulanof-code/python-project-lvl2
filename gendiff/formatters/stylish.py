@@ -24,25 +24,24 @@ def make_stylish(
     indent: str = INDENT * level
     for key in sorted_keys:
         result += '\n'
-        name: str = get_name(diff[key])
-        condition: str = get_condition(diff[key])
-        value: Any = get_value(diff[key])
+        name = get_name(diff[key])
+        condition = get_condition(diff[key])
+        value = get_value(diff[key])
         changed_value = get_changed_value(diff[key])
-        flag: str = FLAGS[condition]
+        flag = FLAGS[condition]
         if condition == IS_DICT:
             result += f'{indent}  {flag}  {name}: '
             result += make_stylish(value, level + 1)
+        elif condition == CHANGED:
+            flag = FLAGS['changed_old']
+            value = formatting_value_to_string(value, indent + INDENT)
+            result += f'{indent}  {flag} {name}: {value}\n'
+            flag = FLAGS['changed_new']
+            changed_value = formatting_value_to_string(changed_value, indent + INDENT)
+            result += f'{indent}  {flag} {name}: {changed_value}'
         else:
-            if condition == CHANGED:
-                flag = FLAGS['changed_old']
-                value = formatting_value_to_string(value, indent + INDENT)
-                result += f'{indent}  {flag} {name}: {value}\n'
-                flag = FLAGS['changed_new']
-                changed_value = formatting_value_to_string(changed_value, indent + INDENT)
-                result += f'{indent}  {flag} {name}: {changed_value}'
-            else:
-                value = formatting_value_to_string(value, indent + INDENT)
-                result += f'{indent}  {flag} {name}: {value}'
+            value = formatting_value_to_string(value, indent + INDENT)
+            result += f'{indent}  {flag} {name}: {value}'
     result += f'\n{indent}}}'
     return result
 

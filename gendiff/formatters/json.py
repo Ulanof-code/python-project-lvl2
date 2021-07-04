@@ -13,8 +13,8 @@ def make_json(diffs: Dict) -> str:
     :return:
         str.
     """
-    formatted_dict: Dict = dict_formatting(diffs)
-    json_output: str = json.dumps(formatted_dict, sort_keys=True, indent=4)
+    formatted_dict = dict_formatting(diffs)
+    json_output = json.dumps(formatted_dict, sort_keys=True, indent=4)
     if not formatted_dict:
         return '{}'
     return json_output

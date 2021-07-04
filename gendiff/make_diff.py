@@ -21,11 +21,11 @@ def make_diffs_representation(data1: Dict,
         - Each dictionary has keys 'name', 'condition', 'value'.
     """
     all_keys = data1.keys() | data2.keys()
-    representation: Dict = dict()
+    representation = dict()
     for key in all_keys:
         node: Dict = {}
-        value1: Any = data1.get(key)
-        value2: Any = data2.get(key)
+        value1 = data1.get(key)
+        value2 = data2.get(key)
         if key not in data2:
             node['condition'] = REMOVED
             node['name'] = key

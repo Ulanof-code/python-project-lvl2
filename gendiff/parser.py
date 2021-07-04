@@ -4,20 +4,11 @@ import json
 import os
 
 
-def json_parse(path_to_file):
-    data = json.loads(read_file(path_to_file))
-    return data
-
-
-def yaml_parse(path_to_file):
-    data = yaml.safe_load(read_file(path_to_file))
-    return data
-
-
-def get_dict_from_file(path_to_file):
-    _, file_type = os.path.splitext(path_to_file)
+def get_dict_from_file(file_path):
+    file = read_file(file_path)
+    _, file_type = os.path.splitext(file_path)
     if file_type.lower() in ".json":
-        return json_parse(path_to_file)
+        return json.loads(file)
     elif file_type in (".yml", ".yaml"):
-        return yaml_parse(path_to_file)
+        return yaml.safe_load(file)
     raise NotImplementedError(f"The file type {file_type} is not supported")

@@ -18,6 +18,6 @@ def get_dict_from_file(path_to_file):
     _, file_type = os.path.splitext(path_to_file)
     if file_type.lower() in ".json":
         return json_parse(path_to_file)
-    elif file_type.lower() in (".yml", ".yaml"):
+    elif file_type in (".yml", ".yaml"):
         return yaml_parse(path_to_file)
     raise NotImplementedError(f"The file type {file_type} is not supported")

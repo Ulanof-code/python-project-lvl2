@@ -32,30 +32,20 @@ def generate_plain_string(diffs: Dict,
         if parent_name == '':
             key_full_path = key
         else:
-            key_full_path = '.'.join([parent_name, key])
-        new_path = "'{}'".format(key_full_path)
+            key_full_path = f'{parent_name}.{key}'
+        new_path = f"'{key_full_path}'"
         if condition == CHANGED:
-            result_list.append(' '.join([
-                PROPERTY,
-                new_path,
-                'was updated. From',
-                formatting_value_to_string(value),
-                'to',
-                formatting_value_to_string(changed_value),
-            ]))
+            result_list.append(
+                f'{PROPERTY} {new_path} was updated. From {value_to_string(value)} to {value_to_string(changed_value)}'
+            )
         elif condition == ADDED:
-            result_list.append(' '.join([
-                PROPERTY,
-                new_path,
-                'was added with value:',
-                formatting_value_to_string(value),
-            ]))
+            result_list.append(
+                f'{PROPERTY} {new_path} was added with value: {value_to_string(value)}'
+            )
         elif condition == REMOVED:
-            result_list.append(' '.join([
-                PROPERTY,
-                new_path,
-                'was removed',
-            ]))
+            result_list.append(
+                f'{PROPERTY} {new_path} was removed'
+            )
         elif condition == IS_DICT:
             result_list.append(generate_plain_string(
                 diffs[key]['value'],
@@ -64,7 +54,7 @@ def generate_plain_string(diffs: Dict,
     return '\n'.join(result_list)
 
 
-def formatting_value_to_string(value: Any) -> str:
+def value_to_string(value: Any) -> str:
     """
     Convert value to string.
     Convert Python "False" and "True" to lowercase.

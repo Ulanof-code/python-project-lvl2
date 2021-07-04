@@ -1,5 +1,6 @@
 from gendiff.make_diff import get_value, get_changed_value, get_condition
 from typing import Dict, Any, List
+from gendiff.make_diff import REMOVED, ADDED, CHANGED, IS_DICT
 
 PROPERTY = 'Property'
 
@@ -33,7 +34,7 @@ def generate_plain_string(diffs: Dict,
         else:
             key_full_path = '.'.join([parent_name, key])
         new_path = "'{}'".format(key_full_path)
-        if condition == 'changed':
+        if condition == CHANGED:
             result_list.append(' '.join([
                 PROPERTY,
                 new_path,
@@ -42,20 +43,20 @@ def generate_plain_string(diffs: Dict,
                 'to',
                 formatting_value_to_string(changed_value),
             ]))
-        elif condition == 'added':
+        elif condition == ADDED:
             result_list.append(' '.join([
                 PROPERTY,
                 new_path,
                 'was added with value:',
                 formatting_value_to_string(value),
             ]))
-        elif condition == 'removed':
+        elif condition == REMOVED:
             result_list.append(' '.join([
                 PROPERTY,
                 new_path,
                 'was removed',
             ]))
-        elif condition == 'is_dict':
+        elif condition == IS_DICT:
             result_list.append(generate_plain_string(
                 diffs[key]['value'],
                 parent_name=key_full_path,

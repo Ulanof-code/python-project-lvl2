@@ -1,11 +1,13 @@
 from gendiff.make_diff import get_condition, get_name, get_changed_value, get_value
 import json
 from typing import Dict
+from gendiff.make_diff import CHANGED, IS_DICT
 
 
 def make_json(diffs: Dict) -> str:
     """
     Formatting the difference representation to json
+    The formatter is selected in FORMATS: tuple, where [0] == 'stylish', [1] == 'plain', [2] == 'json'
     :param:
         diffs: dict.
     :return:
@@ -25,15 +27,15 @@ def dict_formatting(diffs: Dict) -> Dict:
         condition = get_condition(diffs[diff])
         value = get_value(diffs[diff])
         changed_value = get_changed_value(diffs[diff])
-        current_key = f"{name}"
-        if condition == 'is_dict':
+        current_key = str(name)
+        if condition == IS_DICT:
             value = dict_formatting(value)
             result[current_key] = {
                 'condition': condition,
                 'value': value,
             }
         else:
-            if condition == 'changed':
+            if condition == CHANGED:
                 result[current_key] = {
                     'condition': condition,
                     'old_value': value,

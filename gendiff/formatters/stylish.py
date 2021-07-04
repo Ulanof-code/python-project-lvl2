@@ -1,5 +1,6 @@
 from gendiff.make_diff import get_value, get_changed_value, get_condition, get_name
 from typing import Dict, Any
+from gendiff.make_diff import CHANGED, IS_DICT
 
 
 FLAGS: Dict = {
@@ -28,11 +29,11 @@ def make_stylish(
         value: Any = get_value(diff[key])
         changed_value = get_changed_value(diff[key])
         flag: str = FLAGS[condition]
-        if condition == 'is_dict':
+        if condition == IS_DICT:
             result += f'{indent}  {flag}  {name}: '
             result += make_stylish(value, level + 1)
         else:
-            if condition == 'changed':
+            if condition == CHANGED:
                 flag = FLAGS['changed_old']
                 value = formatting_value_to_string(value, indent + INDENT)
                 result += f'{indent}  {flag} {name}: {value}\n'

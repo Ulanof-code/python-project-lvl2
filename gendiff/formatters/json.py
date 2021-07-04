@@ -34,16 +34,15 @@ def dict_formatting(diffs: Dict) -> Dict:
                 'condition': condition,
                 'value': value,
             }
+        elif condition == CHANGED:
+            result[current_key] = {
+                'condition': condition,
+                'old_value': value,
+                'new_value': changed_value
+            }
         else:
-            if condition == CHANGED:
-                result[current_key] = {
-                    'condition': condition,
-                    'old_value': value,
-                    'new_value': changed_value
-                }
-            else:
-                result[current_key] = {
-                    'condition': condition,
-                    'value': value,
-                }
+            result[current_key] = {
+                'condition': condition,
+                'value': value,
+            }
     return result

@@ -1,11 +1,11 @@
 from gendiff.make_diff import get_value, get_changed_value, get_condition, get_name
 from typing import Dict, Any
-from gendiff.make_diff import CHANGED, IS_DICT
+from gendiff.make_diff import CHANGED, NESTED
 
 
 FLAGS: Dict = {
     'changed': '',
-    'is_dict': '',
+    'nested': '',
     'changed_old': '-',
     'changed_new': '+',
     'related': ' ',
@@ -29,7 +29,7 @@ def make_stylish(
         value = get_value(diff[key])
         changed_value = get_changed_value(diff[key])
         flag = FLAGS[condition]
-        if condition == IS_DICT:
+        if condition == NESTED:
             result += f'{indent}  {flag}  {name}: '
             result += make_stylish(value, level + 1)
         elif condition == CHANGED:

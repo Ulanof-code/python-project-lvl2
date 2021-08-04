@@ -1,7 +1,7 @@
 from gendiff.make_diff import get_condition, get_name, get_changed_value, get_value
 import json
 from typing import Dict
-from gendiff.make_diff import CHANGED, IS_DICT
+from gendiff.make_diff import CHANGED, NESTED
 
 
 def make_json(diffs: Dict) -> str:
@@ -28,7 +28,7 @@ def dict_formatting(diffs: Dict) -> Dict:
         value = get_value(diffs[diff])
         changed_value = get_changed_value(diffs[diff])
         current_key = str(name)
-        if condition == IS_DICT:
+        if condition == NESTED:
             value = dict_formatting(value)
             result[current_key] = {
                 'condition': condition,

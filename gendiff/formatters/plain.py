@@ -1,6 +1,6 @@
 from gendiff.make_diff import get_value, get_changed_value, get_condition
 from typing import Dict, Any
-from gendiff.make_diff import REMOVED, ADDED, CHANGED, IS_DICT
+from gendiff.make_diff import REMOVED, ADDED, CHANGED, NESTED
 
 PROPERTY = 'Property'
 
@@ -46,7 +46,7 @@ def format_diffs_to_plain(diffs: Dict,
             line_buffer.append(
                 f'{PROPERTY} {new_path} was removed'
             )
-        elif condition == IS_DICT:
+        elif condition == NESTED:
             line_buffer.append(format_diffs_to_plain(diffs[key]['value'], parent_name=key_full_path))
     return '\n'.join(line_buffer)
 

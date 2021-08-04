@@ -4,7 +4,7 @@ REMOVED = 'removed'
 CHANGED = 'changed'
 ADDED = 'added'
 RELATED = 'related'
-IS_DICT = 'is_dict'
+NESTED = 'nested'
 
 
 def make_diffs(data1: Dict,
@@ -43,7 +43,7 @@ def make_diffs(data1: Dict,
             node['changed_value'] = None
         elif isinstance(value1, dict) and isinstance(value2, dict):
             sub_comprehension = make_diffs(value1, value2)
-            node['condition'] = IS_DICT
+            node['condition'] = NESTED
             node['name'] = key
             node['value'] = sub_comprehension
             node['changed_value'] = None

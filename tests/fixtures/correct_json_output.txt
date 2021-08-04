@@ -1,6 +1,6 @@
 {
     "common": {
-        "condition": "is_dict",
+        "condition": "nested",
         "value": {
             "follow": {
                 "condition": "added",
@@ -30,10 +30,10 @@
                 }
             },
             "setting6": {
-                "condition": "is_dict",
+                "condition": "nested",
                 "value": {
                     "doge": {
-                        "condition": "is_dict",
+                        "condition": "nested",
                         "value": {
                             "wow": {
                                 "condition": "changed",
@@ -55,7 +55,7 @@
         }
     },
     "group1": {
-        "condition": "is_dict",
+        "condition": "nested",
         "value": {
             "baz": {
                 "condition": "changed",

@@ -25,8 +25,8 @@ def generate_diff(first_path: str,
     diffs = make_diffs(dict1, dict2)
     if format_output not in FORMATS:
         raise NotImplementedError(f"The format {format_output} is not supported")
-    elif format_output == FORMATS[1]:  # plain
+    elif format_output == 'plain':
         return make_plain(diffs)
-    elif format_output == FORMATS[2]:  # json
+    elif format_output == 'json':
         return make_json(diffs)
     return make_stylish(diffs)  # stylish

@@ -1,4 +1,4 @@
-from gendiff.common_components import read_file
+from gendiff.read_file import read_file
 import yaml
 import json
 import os

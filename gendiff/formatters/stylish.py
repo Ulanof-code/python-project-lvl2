@@ -1,75 +1,105 @@
-from gendiff.make_diff import get_value, get_changed_value, get_condition, get_name
-from typing import Dict, Any
-from gendiff.make_diff import CHANGED, NESTED
+TAB = '    '
 
 
-FLAGS: Dict = {
-    'changed': '',
-    'nested': '',
-    'changed_old': '-',
-    'changed_new': '+',
-    'related': ' ',
-    'added': '+',
-    'removed': '-',
-}
-
-INDENT = '    '
-
-
-def make_stylish(
-        diff,
-        level=0):
-    sorted_keys = sorted(diff.keys())
-    result: str = '{'
-    indent: str = INDENT * level
-    for key in sorted_keys:
-        result += '\n'
-        name = get_name(diff[key])
-        condition = get_condition(diff[key])
-        value = get_value(diff[key])
-        changed_value = get_changed_value(diff[key])
-        flag = FLAGS[condition]
-        if condition == NESTED:
-            result += f'{indent}  {flag}  {name}: '
-            result += make_stylish(value, level + 1)
-        elif condition == CHANGED:
-            flag = FLAGS['changed_old']
-            value = format_value_to_string(value, indent + INDENT)
-            result += f'{indent}  {flag} {name}: {value}\n'
-            flag = FLAGS['changed_new']
-            changed_value = format_value_to_string(changed_value, indent + INDENT)
-            result += f'{indent}  {flag} {name}: {changed_value}'
-        else:
-            value = format_value_to_string(value, indent + INDENT)
-            result += f'{indent}  {flag} {name}: {value}'
-    result += f'\n{indent}}}'
-    return result
-
-
-def format_value_to_string(value: Any,
-                           indent: str) -> str:
+def make_stylish(diff, depth=0):
+    """Format dict with difference.
+    Args:
+        diff: dict
+        depth: int
+    Returns:
+        Return formatting difference.
     """
-    Convert value to string.
-    Convert Python "False" and "True" to lowercase.
-    Convert Python "None" to "null".
-    :param indent: indent via spaces, str.
-    :param value: in any format.
-    :return: str.
+    keys = sorted(diff.keys())
+    format_diff = []
+    for key in keys:
+        if diff[key]['condition'] == 'removed':
+            format_diff.append(join_line(
+                depth,
+                '  - ',
+                key,
+                formatting_unchanged(diff[key]['value'], depth + 1),
+            ))
+        if diff[key]['condition'] == 'added':
+            format_diff.append(join_line(
+                depth,
+                '  + ',
+                key,
+                formatting_unchanged(diff[key]['value'], depth + 1),
+            ))
+        elif diff[key]['condition'] == 'related':
+            format_diff.append(join_line(
+                depth,
+                TAB,
+                key,
+                formatting_unchanged(diff[key]['value'], depth + 1),
+            ))
+        elif diff[key]['condition'] == 'changed':
+            format_diff.append(join_line(
+                depth,
+                '  - ',
+                key,
+                formatting_unchanged(diff[key]['value'], depth + 1),
+            ))
+            format_diff.append(join_line(
+                depth,
+                '  + ',
+                key,
+                formatting_unchanged(diff[key]['changed_value'], depth + 1),
+            ))
+        elif diff[key]['condition'] == 'nested':
+            format_diff.append(join_line(
+                depth,
+                TAB,
+                key,
+                make_stylish(diff[key]['value'], depth + 1),
+            ))
+    return '\n'.join([
+        '{',
+        *format_diff,
+        '{a}{b}'.format(a=TAB * depth, b='}'),
+    ])
+
+
+def join_line(depth, indent, key, mean):
+    """Join words in line.
+    Args:
+        depth: int
+        indent: str
+        key: str
+        mean: str
+    Returns:
+        Return join line.
     """
-    if isinstance(value, bool):
-        return "true" if value else "false"
-    if value is None:
-        return "null"
-    if isinstance(value, dict):
-        return dict_to_string(value, indent)
-    return str(value)
+    indent_and_key = ''.join([depth * TAB, indent, key, ':'])
+    return ' '.join([indent_and_key, str(mean)])
 
 
-def dict_to_string(value: Any, indent: str) -> str:
-    string = "{\n"
-    for key, value in value.items():
-        string += f"{INDENT}{indent}{key}: "
-        string += format_value_to_string(value, indent=indent + INDENT)
-        string += "\n"
-    string += f"{indent}}}"
-    return string
+def formatting_unchanged(dict_unchanged, depth):
+    """Format dict without changing.
+    Args:
+        dict_unchanged: dict
+        depth: int
+    Returns:
+        Return formatting dict.
+    """
+    objects_to_json = {'True': 'true', 'False': 'false', 'None': 'null'}
+    if not isinstance(dict_unchanged, dict):
+        if str(dict_unchanged) in objects_to_json.keys():
+            return objects_to_json[str(dict_unchanged)]
+        return str(dict_unchanged)
+    list_values = []
+    for key in dict_unchanged.keys():
+        list_values.append(''.join([
+            TAB * (depth + 1),
+            str(key),
+            ': ',
+            str(formatting_unchanged(
+                dict_unchanged[key],
+                depth=depth + 1,
+            )),
+        ]))
+    return '\n'.join([
+        '{',
+        *list_values,
+        '{a}{b}'.format(a=(TAB * depth), b='}'),
+    ])

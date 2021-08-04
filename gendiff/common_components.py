@@ -1,3 +1,3 @@
-def read_file(path_to_file):
-    with open(path_to_file, 'r') as file:
+def read_file(file_path):
+    with open(file_path, 'r') as file:
         return file.read()

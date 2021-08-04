@@ -6,14 +6,14 @@ PROPERTY = 'Property'
 
 
 def make_plain(diffs: Dict) -> str:
-    plain_output = generate_plain_string(diffs)
+    plain_output = format_diffs_to_plain(diffs)
     if plain_output:
         return plain_output
     else:
         return '{}'
 
 
-def generate_plain_string(diffs: Dict,
+def format_diffs_to_plain(diffs: Dict,
                           parent_name='') -> str:  # noqa: C901
     """
     Formatting the difference representation to plain output
@@ -24,7 +24,7 @@ def generate_plain_string(diffs: Dict,
         str
     """
     sorted_keys = sorted(diffs.keys())
-    result_list = []
+    line_buffer = []
     for key in sorted_keys:
         condition = get_condition(diffs[key])
         value = get_value(diffs[key])
@@ -35,23 +35,20 @@ def generate_plain_string(diffs: Dict,
             key_full_path = f'{parent_name}.{key}'
         new_path = f"'{key_full_path}'"
         if condition == CHANGED:
-            result_list.append(
+            line_buffer.append(
                 f'{PROPERTY} {new_path} was updated. From {value_to_string(value)} to {value_to_string(changed_value)}'
             )
         elif condition == ADDED:
-            result_list.append(
+            line_buffer.append(
                 f'{PROPERTY} {new_path} was added with value: {value_to_string(value)}'
             )
         elif condition == REMOVED:
-            result_list.append(
+            line_buffer.append(
                 f'{PROPERTY} {new_path} was removed'
             )
         elif condition == IS_DICT:
-            result_list.append(generate_plain_string(
-                diffs[key]['value'],
-                parent_name=key_full_path,
-            ))
-    return '\n'.join(result_list)
+            line_buffer.append(format_diffs_to_plain(diffs[key]['value'], parent_name=key_full_path))
+    return '\n'.join(line_buffer)
 
 
 def value_to_string(value: Any) -> str:

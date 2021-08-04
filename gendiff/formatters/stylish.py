@@ -34,20 +34,20 @@ def make_stylish(
             result += make_stylish(value, level + 1)
         elif condition == CHANGED:
             flag = FLAGS['changed_old']
-            value = formatting_value_to_string(value, indent + INDENT)
+            value = format_value_to_string(value, indent + INDENT)
             result += f'{indent}  {flag} {name}: {value}\n'
             flag = FLAGS['changed_new']
-            changed_value = formatting_value_to_string(changed_value, indent + INDENT)
+            changed_value = format_value_to_string(changed_value, indent + INDENT)
             result += f'{indent}  {flag} {name}: {changed_value}'
         else:
-            value = formatting_value_to_string(value, indent + INDENT)
+            value = format_value_to_string(value, indent + INDENT)
             result += f'{indent}  {flag} {name}: {value}'
     result += f'\n{indent}}}'
     return result
 
 
-def formatting_value_to_string(value: Any,
-                               indent: str) -> str:
+def format_value_to_string(value: Any,
+                           indent: str) -> str:
     """
     Convert value to string.
     Convert Python "False" and "True" to lowercase.
@@ -61,11 +61,15 @@ def formatting_value_to_string(value: Any,
     if value is None:
         return "null"
     if isinstance(value, dict):
-        string = "{\n"
-        for key, value in value.items():
-            string += f"{INDENT}{indent}{key}: "
-            string += formatting_value_to_string(value, indent=indent + INDENT)
-            string += "\n"
-        string += f"{indent}}}"
-        return string
+        return dict_to_string(value, indent)
     return str(value)
+
+
+def dict_to_string(value: Any, indent: str) -> str:
+    string = "{\n"
+    for key, value in value.items():
+        string += f"{INDENT}{indent}{key}: "
+        string += format_value_to_string(value, indent=indent + INDENT)
+        string += "\n"
+    string += f"{indent}}}"
+    return string

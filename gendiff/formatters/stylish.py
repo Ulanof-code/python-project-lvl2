@@ -76,7 +76,7 @@ def format_value(dict_unchanged, depth):
                 dict_unchanged[key],
                 depth=depth + 1,
             )),
-            ]))
+        ]))
     return '\n'.join([
         '{',
         *list_values,

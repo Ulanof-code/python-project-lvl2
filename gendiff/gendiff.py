@@ -22,11 +22,11 @@ def generate_diff(first_path: str,
     """
     dict1 = get_dict_from_file(first_path)
     dict2 = get_dict_from_file(second_path)
-    diffs = make_diff(dict1, dict2)
+    diff = make_diff(dict1, dict2)
     if format_output not in FORMATS:
         raise NotImplementedError(f"The format {format_output} is not supported")
     elif format_output == 'plain':
-        return make_plain(diffs)
+        return make_plain(diff)
     elif format_output == 'json':
-        return make_json(diffs)
-    return make_stylish(diffs)  # stylish
+        return make_json(diff)
+    return make_stylish(diff)  # stylish

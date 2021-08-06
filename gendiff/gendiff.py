@@ -1,4 +1,4 @@
-from gendiff.make_diff import make_diffs
+from gendiff.make_diff import make_diff
 from gendiff.formatters.plain import make_plain
 from gendiff.formatters.stylish import make_stylish
 from gendiff.formatters.json import make_json
@@ -22,7 +22,7 @@ def generate_diff(first_path: str,
     """
     dict1 = get_dict_from_file(first_path)
     dict2 = get_dict_from_file(second_path)
-    diffs = make_diffs(dict1, dict2)
+    diffs = make_diff(dict1, dict2)
     if format_output not in FORMATS:
         raise NotImplementedError(f"The format {format_output} is not supported")
     elif format_output == 'plain':

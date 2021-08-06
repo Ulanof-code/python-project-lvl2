@@ -1,4 +1,6 @@
 TAB = '    '
+PLUS = '  + '
+MINUS = '  - '
 
 
 def make_stylish(diff, depth=0):
@@ -15,14 +17,14 @@ def make_stylish(diff, depth=0):
         if diff[key]['condition'] == 'removed':
             format_diff.append(join_line(
                 depth,
-                '  - ',
+                MINUS,
                 key,
                 formatting_unchanged(diff[key]['value'], depth + 1),
             ))
         if diff[key]['condition'] == 'added':
             format_diff.append(join_line(
                 depth,
-                '  + ',
+                PLUS,
                 key,
                 formatting_unchanged(diff[key]['value'], depth + 1),
             ))

@@ -7,8 +7,8 @@ RELATED = 'related'
 NESTED = 'nested'
 
 
-def make_diffs(data1: Dict,
-               data2: Dict) -> Dict:
+def make_diff(data1: Dict,
+              data2: Dict) -> Dict:
     """
     This function generates the internal representation
     of the difference program in the source files
@@ -42,7 +42,7 @@ def make_diffs(data1: Dict,
             node['value'] = value1
             node['changed_value'] = None
         elif isinstance(value1, dict) and isinstance(value2, dict):
-            sub_comprehension = make_diffs(value1, value2)
+            sub_comprehension = make_diff(value1, value2)
             node['condition'] = NESTED
             node['name'] = key
             node['value'] = sub_comprehension

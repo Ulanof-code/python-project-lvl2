@@ -7,8 +7,7 @@ RELATED = 'related'
 NESTED = 'nested'
 
 
-def make_diff(data1: Dict,
-              data2: Dict) -> Dict:
+def make_diff(data1: Dict, data2: Dict) -> Dict:
     """
     This function generates the internal representation
     of the difference program in the source files

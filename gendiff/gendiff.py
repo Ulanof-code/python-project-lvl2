@@ -6,9 +6,7 @@ from gendiff.parser import get_dict_from_file
 from gendiff.formatters.formats import FORMATS
 
 
-def generate_diff(first_path: str,
-                  second_path: str,
-                  format_output='stylish') -> str:
+def generate_diff(first_path: str, second_path: str, format_output='stylish') -> str:
     """
     The formatter is selected in FORMATS: tuple, where [0] == 'stylish', [1] == 'plain', [2] == 'json'
 

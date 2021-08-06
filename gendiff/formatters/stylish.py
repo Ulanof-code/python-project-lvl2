@@ -15,46 +15,37 @@ def make_stylish(diff, depth=0):
     format_diff = []
     for key in keys:
         if diff[key]['condition'] == 'removed':
-            format_diff.append(join_line(
-                depth,
-                MINUS,
-                key,
-                formatting_unchanged(diff[key]['value'], depth + 1),
-            ))
+            format_diff.append(
+                f"{TAB * depth}"
+                f"{MINUS}{key}: "
+                f"{format_value(diff[key]['value'], depth + 1)}")
         if diff[key]['condition'] == 'added':
-            format_diff.append(join_line(
-                depth,
-                PLUS,
-                key,
-                formatting_unchanged(diff[key]['value'], depth + 1),
-            ))
+            format_diff.append(
+                f"{TAB * depth}"
+                f"{PLUS}{key}: "
+                f"{format_value(diff[key]['value'], depth + 1)}")
         elif diff[key]['condition'] == 'related':
-            format_diff.append(join_line(
-                depth,
-                TAB,
-                key,
-                formatting_unchanged(diff[key]['value'], depth + 1),
-            ))
+            format_diff.append(
+                f"{TAB * depth}"
+                f"{TAB}"
+                f"{key}: {format_value(diff[key]['value'], depth + 1)}")
         elif diff[key]['condition'] == 'changed':
-            format_diff.append(join_line(
-                depth,
-                '  - ',
-                key,
-                formatting_unchanged(diff[key]['value'], depth + 1),
-            ))
-            format_diff.append(join_line(
-                depth,
-                '  + ',
-                key,
-                formatting_unchanged(diff[key]['changed_value'], depth + 1),
-            ))
+            format_diff.append(
+                f"{TAB * depth}"
+                f"{MINUS}"
+                f"{key}: "
+                f"{format_value(diff[key]['value'], depth + 1)}")
+            format_diff.append(
+                f"{TAB * depth}"
+                f"{PLUS}"
+                f"{key}: "
+                f"{format_value(diff[key]['changed_value'], depth + 1)}")
         elif diff[key]['condition'] == 'nested':
-            format_diff.append(join_line(
-                depth,
-                TAB,
-                key,
-                make_stylish(diff[key]['value'], depth + 1),
-            ))
+            format_diff.append(
+                f"{TAB * depth}"
+                f"{TAB}"
+                f"{key}: "
+                f"{make_stylish(diff[key]['value'], depth + 1)}")
     return '\n'.join([
         '{',
         *format_diff,
@@ -62,21 +53,7 @@ def make_stylish(diff, depth=0):
     ])
 
 
-def join_line(depth, indent, key, mean):
-    """Join words in line.
-    Args:
-        depth: int
-        indent: str
-        key: str
-        mean: str
-    Returns:
-        Return join line.
-    """
-    indent_and_key = ''.join([depth * TAB, indent, key, ':'])
-    return ' '.join([indent_and_key, str(mean)])
-
-
-def formatting_unchanged(dict_unchanged, depth):
+def format_value(dict_unchanged, depth):
     """Format dict without changing.
     Args:
         dict_unchanged: dict
@@ -95,11 +72,11 @@ def formatting_unchanged(dict_unchanged, depth):
             TAB * (depth + 1),
             str(key),
             ': ',
-            str(formatting_unchanged(
+            str(format_value(
                 dict_unchanged[key],
                 depth=depth + 1,
             )),
-        ]))
+            ]))
     return '\n'.join([
         '{',
         *list_values,
